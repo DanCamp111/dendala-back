@@ -48,6 +48,7 @@ class ClientesController extends Controller
         $cliente->rfc = $request->rfc;
         $cliente->contacto = $request->contacto;
         $cliente->telefono_contacto = $request->telefono_contacto;
+        $cliente->direccion = $request->direccion;
         $cliente->rol = "C";
         $cliente->save();
 
