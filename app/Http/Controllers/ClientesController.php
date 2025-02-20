@@ -9,13 +9,13 @@ use PhpParser\Node\Expr\New_;
 
 class ClientesController extends Controller
 {
-    public function index() 
+    public function index()
     {
-        $clientes =   Clientes::where('rol','C')->get();
-        return $clientes;
+        return response()->json(Clientes::select('id', 'name')->where('rol', 'C')->get());
     }
 
-    public function client($id) 
+
+    public function client($id)
     {
         $cliente =   Clientes::find($id);
         return $cliente;
@@ -34,12 +34,9 @@ class ClientesController extends Controller
 
     public function store(Request $request)
     {
-        if($request->id != 0)
-        {
-            $cliente = Clientes::find($request->id);    
-        }
-        else
-        {
+        if ($request->id != 0) {
+            $cliente = Clientes::find($request->id);
+        } else {
             $cliente = new Clientes();
         }
         $cliente->name = $request->name;
@@ -54,5 +51,4 @@ class ClientesController extends Controller
 
         return "Ok";
     }
-
 }
