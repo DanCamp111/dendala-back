@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\PolizasController;
 use App\Http\Controllers\FacturasController;
+use App\Http\Controllers\ServiciosController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -37,3 +38,11 @@ Route::get('tecnicos', [ClientesController::class, 'indexTecnicos']);
 Route::get('tecnico/{id}', [ClientesController::class, 'tecnic']);
 Route::delete('tecnico/eliminar/{id}', [ClientesController::class, 'deleteTecnico']);
 Route::post('tecnico/guardar', [ClientesController::class, 'storeTecnico']);
+
+//API SERVICIOS
+
+Route::get('servicios', [ServiciosController::class, 'index']);
+Route::get('servicio/{id}', [ServiciosController::class, 'show']);
+Route::post('servicio/guardar', [ServiciosController::class, 'store']);
+Route::put('servicio/actualizar/{id}', [ServiciosController::class, 'update']);
+Route::delete('servicio/eliminar/{id}', [ServiciosController::class, 'destroy']);
