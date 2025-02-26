@@ -11,7 +11,7 @@ class ClientesController extends Controller
 {
     public function index()
     {
-        return response()->json(Clientes::select('id', 'name')->where('rol', 'C')->get());
+        return response()->json(Clientes::get());
     }
 
 
@@ -50,5 +50,42 @@ class ClientesController extends Controller
         $cliente->save();
 
         return "Ok";
+    }
+
+    public function indexTecnicos()
+    {
+        return response()->json(Clientes::where('rol', 'T')->get());
+    }
+
+    public function tecnic($id)
+    {
+        $tecnico = Clientes::where('rol', 'T')->find($id);
+        return $tecnico;
+    }
+
+    public function storeTecnico(Request $request)
+    {
+        $tecnico = new Clientes();
+        $tecnico->name = $request->name;
+        $tecnico->email = $request->email;
+        $tecnico->password = Hash::make($request->password);
+        $tecnico->rfc = $request->rfc;
+        $tecnico->contacto = $request->contacto;
+        $tecnico->telefono_contacto = $request->telefono_contacto;
+        $tecnico->direccion = $request->direccion;
+        $tecnico->rol = "T";
+        $tecnico->save();
+
+        return response()->json(['message' => 'Técnico registrado correctamente']);
+    }
+
+    public function deleteTecnico($id)
+    {
+        $tecnico = Clientes::where('id', $id)->where('rol', 'T')->first();
+        if ($tecnico) {
+            $tecnico->delete();
+            return response()->json(['message' => 'Técnico eliminado correctamente']);
+        }
+        return response()->json(['error' => 'Técnico no encontrado'], 404);
     }
 }
